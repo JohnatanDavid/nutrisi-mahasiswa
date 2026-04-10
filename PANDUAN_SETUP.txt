@@ -1,0 +1,147 @@
+# 📘 PANDUAN LENGKAP — Setup, GitHub & Deploy
+# Simpan file ini, baca dari atas ke bawah secara berurutan.
+
+# =============================================================
+# LANGKAH 1: INSTALL SOFTWARE YANG DIBUTUHKAN
+# =============================================================
+
+# 1A. Install Python 3.11
+#     → Buka https://www.python.org/downloads/
+#     → Download versi 3.11.x (Windows installer 64-bit)
+#     → Saat install, CENTANG "Add Python to PATH" ✓
+#     → Klik Install Now
+
+# 1B. Install VS Code
+#     → Buka https://code.visualstudio.com/
+#     → Download dan install (Next → Next → Install)
+
+# 1C. Install Git
+#     → Buka https://git-scm.com/downloads
+#     → Download untuk Windows, install dengan opsi default
+
+# 1D. Buat akun GitHub (jika belum punya)
+#     → Buka https://github.com/
+#     → Sign Up → isi username, email, password
+
+
+# =============================================================
+# LANGKAH 2: SETUP PROYEK DI KOMPUTER KAMU
+# =============================================================
+
+# Buka folder proyek yang sudah kamu download/extract.
+# Buka VS Code → File → Open Folder → pilih folder "nutrisi-mahasiswa"
+
+# Buka Terminal di VS Code: View → Terminal  (atau Ctrl + `)
+
+# 2A. Buat virtual environment (lingkungan Python terisolasi)
+python -m venv venv
+
+# 2B. Aktifkan virtual environment
+# Windows:
+venv\Scripts\activate
+# (kamu akan lihat tulisan "(venv)" di awal baris terminal — artinya aktif)
+
+# Mac/Linux:
+# source venv/bin/activate
+
+# 2C. Install semua library yang dibutuhkan
+pip install -r requirements.txt
+# (tunggu sampai selesai, butuh 2-5 menit tergantung koneksi internet)
+
+# 2D. Jalankan aplikasi
+streamlit run app.py
+# Browser akan terbuka otomatis ke http://localhost:8501
+# Tekan Ctrl+C di terminal untuk menghentikan aplikasi
+
+
+# =============================================================
+# LANGKAH 3: UPLOAD KE GITHUB (agar teman bisa akses)
+# =============================================================
+
+# 3A. Konfigurasi Git (lakukan sekali saja)
+git config --global user.name "Nama Kamu"
+git config --global user.email "emailkamu@gmail.com"
+
+# 3B. Buat repository baru di GitHub:
+#     → Login ke github.com
+#     → Klik tombol "+" di pojok kanan atas
+#     → Pilih "New repository"
+#     → Repository name: nutrisi-mahasiswa
+#     → Description: Sistem Rekomendasi Pola Makan Sehat Mahasiswa
+#     → Pilih "Public" (agar teman bisa lihat)
+#     → JANGAN centang "Add a README file" (kita sudah punya)
+#     → Klik "Create repository"
+
+# 3C. Di terminal VS Code, jalankan perintah berikut satu per satu:
+
+# Inisialisasi git di folder proyek
+git init
+
+# Tambahkan semua file ke staging
+git add .
+
+# Buat commit pertama
+git commit -m "feat: Initial commit - Sistem Rekomendasi Pola Makan Mahasiswa"
+
+# Hubungkan ke repository GitHub (ganti USERNAME dengan username GitHub kamu)
+git remote add origin https://github.com/USERNAME/nutrisi-mahasiswa.git
+
+# Upload ke GitHub
+git branch -M main
+git push -u origin main
+
+# ✅ Selesai! Cek github.com/USERNAME/nutrisi-mahasiswa
+
+
+# =============================================================
+# LANGKAH 4: DEPLOY GRATIS KE STREAMLIT CLOUD
+# (Agar aplikasi bisa diakses siapa saja lewat link)
+# =============================================================
+
+# 4A. Buka https://share.streamlit.io/
+# 4B. Login dengan akun GitHub kamu
+# 4C. Klik "New app"
+# 4D. Isi form:
+#     - Repository: USERNAME/nutrisi-mahasiswa
+#     - Branch: main
+#     - Main file path: app.py
+# 4E. Klik "Deploy!"
+# 4F. Tunggu 2-3 menit
+# 4G. Kamu akan mendapat link seperti: https://nutrimahasiswa.streamlit.app
+#     Bagikan link ini ke teman-temanmu! 🎉
+
+
+# =============================================================
+# LANGKAH 5: UPDATE KODE (setelah ada perubahan)
+# =============================================================
+
+# Setiap kali kamu edit kode dan ingin update di GitHub:
+git add .
+git commit -m "fix: Deskripsi perubahan yang kamu buat"
+git push
+
+# Streamlit Cloud akan otomatis update dalam 1-2 menit!
+
+
+# =============================================================
+# TROUBLESHOOTING (Solusi masalah umum)
+# =============================================================
+
+# ❌ Error: "streamlit not recognized"
+# ✅ Solusi: Pastikan virtual environment aktif (ada tulisan "(venv)")
+#            Jalankan lagi: venv\Scripts\activate
+
+# ❌ Error: "ModuleNotFoundError: No module named 'pandas'"
+# ✅ Solusi: pip install -r requirements.txt
+
+# ❌ Error: "FileNotFoundError: data/nutrients.csv"
+# ✅ Solusi: Pastikan file nutrients.csv ada di folder data/
+
+# ❌ Git push minta username/password
+# ✅ Solusi: Buat Personal Access Token di GitHub:
+#    github.com → Settings → Developer settings → Personal access tokens
+#    → Generate new token → centang "repo" → Generate
+#    Gunakan token ini sebagai password saat git push
+
+# ❌ Port 8501 sudah dipakai
+# ✅ Solusi: streamlit run app.py --server.port 8502
